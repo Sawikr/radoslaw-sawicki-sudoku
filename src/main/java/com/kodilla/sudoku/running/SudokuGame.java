@@ -1,22 +1,31 @@
 package com.kodilla.sudoku.running;
 
-import com.kodilla.sudoku.display.Board;
+import com.kodilla.sudoku.display.GameBoard;
+import com.kodilla.sudoku.display.GameIntroduction;
+import com.kodilla.sudoku.move.GameWin;
+import com.kodilla.sudoku.option.GameOption;
 import static com.kodilla.sudoku.display.GameBoard.printBoard;
-import static com.kodilla.sudoku.logic.SolveBoard.solveBoard;
+import static com.kodilla.sudoku.display.GameBoard.printEmptyBoard;
 
 public class SudokuGame {
 
     public static void main(String[] args) {
 
-        System.out.println("\nSudoku Game started!:\n");
-        printBoard(Board.board());
+        runningGame();
+    }
 
-        if (solveBoard(Board.board())) {
-            System.out.println("\nSolved successfully!");
+    public static void runningGame() {
+        int[][] board = GameIntroduction.printIntroduction();
+
+        if (GameWin.gameWin) {
+            GameWin.gameWin = false;
+            printEmptyBoard(board);
+            GameBoard.printPlayerSelection(board);
         }
         else {
-            System.out.println("\nUnsolvable board :(");
-            printBoard(Board.board());
+            printBoard(board);
+            GameOption.gameChoice(board);
+            GameBoard.printPlayerSelection(board);
         }
     }
 }
